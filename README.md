@@ -68,11 +68,11 @@ And after Tailwind handles overrides, you end up with:
 
 ## Turbine Config
 
-|   Name   | Type | Description | Example |
-| -------- | --- | --- | --- |
-| `prefix` | `string` | Class prefix used to identify your components | `'btn'` |
-| `baseStyles?` | `string` | Base Tailwind styles for the component | `'@apply px-4 py-2'` |
-| `modifiers?` | `{ [modifier: string]: string }` | Object where each key is a modifier prefix and values are Tailwind overrides | `{ sm: '@apply px3 py-0.5' }` |
-| `colorStyles` | `(color) => string` | Function which returns Tailwind styles that utilize theme colors | `` (color) => `@apply bg-${color}-500 text-white` `` |
-| `colorValidator` | `(color, values) => boolean` | Function which is used to only generate components for theme colors that meet the requirements | `(color, values) => color !== 'gray'`
+|       Name       |               Type               |                                           Description                                          |                        Example                       |
+| ---------------- | -------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `prefix`         | `string`                         | Class prefix used to identify your components                                                  | `'btn'`                                              |
+| `baseStyles?`    | `string`                         | Base Tailwind styles for the component                                                         | `'@apply px-4 py-2'`                                 |
+| `modifiers?`     | `{ [modifier: string]: string }` | Object where each key is a modifier prefix and values are Tailwind overrides                   | `{ sm: '@apply px3 py-0.5' }`                        |
+| `colorStyles`    | `(color) => string`              | Function which returns Tailwind styles that utilize theme colors                               | `` (color) => `@apply bg-${color}-500 text-white` `` |
+| `colorValidator` | `(color, values) => boolean`     | Function which is used to only generate components for theme colors that meet the requirements | `(color, values) => color !== 'gray'`                |
 
