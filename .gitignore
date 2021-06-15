@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# Build Output
+dist/
+
+# NPM Local Config
+.npmrc
