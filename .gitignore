@@ -6,3 +6,6 @@ dist/
 
 # NPM Local Config
 .npmrc
+
+# NPM Pack
+**/*.tgz
