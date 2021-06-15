@@ -1,4 +1,4 @@
-# tailwindcss-turbine ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Superiorjt/tailwindcss-turbine?color=%2306B6D4&sort=semver) ![NPM](https://img.shields.io/npm/l/tailwindcss-turbine?color=06b6d4)
+# tailwindcss-turbine ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SuperiorJT/tailwindcss-turbine/CI?color=%2306B6D4) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Superiorjt/tailwindcss-turbine?color=%2306B6D4&sort=semver) ![NPM](https://img.shields.io/npm/l/tailwindcss-turbine?color=06b6d4)
 
 > **Note** - This plugin currently only officially supports **Tailwind CSS v2.1** and upwards
 
