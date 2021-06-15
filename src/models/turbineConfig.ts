@@ -5,7 +5,7 @@ export interface ITurbineConfig {
     modifiers?: Record<string, string>;
     baseStyles?: string;
     colorStyles: (color: string) => string;
-    colorValidator: (color: string, values: any) => boolean;
+    colorValidator?: (color: string, values: any) => boolean;
 }
 
 export const DEFAULTS: ITurbineConfig = {

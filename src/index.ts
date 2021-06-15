@@ -2,6 +2,10 @@ import plugin from 'tailwindcss/plugin';
 import { DEFAULTS, ITurbineConfig } from './models/turbineConfig';
 import { calculateBaseStyles, calculateModifierStyles, calculateBaseColorStyles, calculateModifierColorStyles } from './util';
 
+function getColorValidator(config: ITurbineConfig) {
+    return config.colorValidator ? config.colorValidator : (_color: string, _values: any) => true;
+}
+
 /**
 * Tailwind CSS plugin which will generate class-based components using
 * a provided config object and your color theme.
@@ -14,6 +18,8 @@ import { calculateBaseStyles, calculateModifierStyles, calculateBaseColorStyles,
 */
 const turbine = plugin.withOptions<ITurbineConfig>((config: ITurbineConfig = DEFAULTS) => {
     return ({addComponents, theme}) => {
+        const colorValidator = getColorValidator(config);
+
         let all = {};
         if (config.baseStyles) {
             all = {
@@ -24,7 +30,7 @@ const turbine = plugin.withOptions<ITurbineConfig>((config: ITurbineConfig = DEF
         }
 
         const themed = Object.entries(theme('colors'))
-            .filter(([color, values]) => config.colorValidator(color, values))
+            .filter(([color, values]) => colorValidator(color, values))
             .reduce((res, [color, _]) => {
             return {
                 ...res,
