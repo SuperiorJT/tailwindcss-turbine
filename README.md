@@ -1,7 +1,5 @@
 # tailwindcss-turbine ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Superiorjt/tailwindcss-turbine?color=%2306B6D4&sort=semver) ![NPM](https://img.shields.io/npm/l/tailwindcss-turbine?color=06b6d4)
 
-## Introduction
-
 > **Note** - This plugin currently only officially supports **Tailwind CSS v2.1** and upwards
 
 `tailwindcss-turbine` is a plugin that was built to easily generate different component classes for your application. The goal of this project is to be able to easily use Tailwind-designed elements within your own app.
