@@ -8,7 +8,7 @@ import { calculateBaseStyles, calculateModifierStyles, calculateBaseColorStyles,
 * 
 * @defaultValue Not providing a configuration object will generate tail-kit-styled buttons
 *
-* @see [Docs](https://github.com/SuperiorJT)
+* @see [Docs](https://github.com/SuperiorJT/tailwindcss-turbine)
 *
 * @param config The configuration object to generate components from.
 */
