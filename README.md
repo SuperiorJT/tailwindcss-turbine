@@ -2,9 +2,9 @@
 
 > **Note** - This plugin currently only officially supports **Tailwind CSS v2.1** and upwards
 
-`tailwindcss-turbine` is a plugin that was built to easily generate different component classes for your application. The goal of this project is to be able to easily use Tailwind-designed elements within your own app.
+`tailwindcss-turbine` is a plugin that was built to easily generate different component classes for your application. The goal of this project is to be able to easily use custom Tailwind CSS elements within your own app.
 
-For example, the default options for Turbine will generate `.btn` classes based on the buttons designed in [tail-kit](https://www.tailwind-kit.com/components/buttons). It's easy to make reusable components by simply copying the tailwind styles into the Turbine config and using the generated classes.
+For example, the default options for Turbine will generate `.btn` classes based on the buttons designed in [tail-kit](https://www.tailwind-kit.com/components/buttons). It's easy to make reusable components by simply copying the Tailwind CSS styles into the Turbine config and using the generated classes.
 
 ### Installation
 
@@ -58,7 +58,7 @@ For the example above, the class name for a small blue component would be `.my-p
 }
 ```
 
-And after Tailwind handles overrides, you end up with:
+And after Tailwind CSS handles overrides, you end up with:
 
 ```css
 .my-prefix-sm-blue {
@@ -68,11 +68,18 @@ And after Tailwind handles overrides, you end up with:
 
 ## Turbine Config
 
-|       Name       |               Type               |                                           Description                                          |                        Example                       |
-| ---------------- | -------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| `prefix`         | `string`                         | Class prefix used to identify your components                                                  | `'btn'`                                              |
-| `baseStyles?`    | `string`                         | Base Tailwind styles for the component                                                         | `'@apply px-4 py-2'`                                 |
-| `modifiers?`     | `{ [modifier: string]: string }` | Object where each key is a modifier prefix and values are Tailwind overrides                   | `{ sm: '@apply px3 py-0.5' }`                        |
-| `colorStyles`    | `(color) => string`              | Function which returns Tailwind styles that utilize theme colors                               | `` (color) => `@apply bg-${color}-500 text-white` `` |
-| `colorValidator` | `(color, values) => boolean`     | Function which is used to only generate components for theme colors that meet the requirements | `(color, values) => color !== 'gray'`                |
+|        Name       |               Type               |                                           Description                                          |                        Example                       |
+| ----------------- | -------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| `prefix`          | `string`                         | Class prefix used to identify your components                                                  | `'btn'`                                              |
+| `baseStyles?`     | `string`                         | Base Tailwind CSS styles for the component                                                     | `'@apply px-4 py-2'`                                 |
+| `modifiers?`      | `{ [modifier: string]: string }` | Object where each key is a modifier prefix and values are Tailwind CSS overrides               | `{ sm: '@apply px3 py-0.5' }`                        |
+| `colorStyles`     | `(color) => string`              | Function which returns Tailwind CSS styles that utilize theme colors                           | `` (color) => `@apply bg-${color}-500 text-white` `` |
+| `colorValidator?` | `(color, values) => boolean`     | Function which is used to only generate components for theme colors that meet the requirements | `(color, values) => color !== 'gray'`                |
 
+## Troubleshooting
+
+> *Tailwind CSS is throwing a class not found error for one of my colors.*
+
+This has to do with one of the colors in your theme not having a value for the color class you are requesting. There are two solutions for this:
+  1. Add a color value to your theme config that matches the class name used in your `colorStyles`
+  2. Modify/Add the `colorValidator` to prevent the target color/value from having Turbine-generated styles
