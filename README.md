@@ -32,7 +32,7 @@ module.exports = {
         sm: '@apply px-3 py-0.5 ...',
         lg: '@apply px-5 py-3 ...',
       },
-      colorStyles: (color) => `@apply bg-${color}-500 text-white',
+      colorStyles: (color) => `@apply bg-${color}-500 text-white`,
       colorValidator: (color, values) => color !== 'gray' && values[500]
     })
   ]
