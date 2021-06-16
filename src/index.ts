@@ -1,9 +1,22 @@
 import plugin from 'tailwindcss/plugin';
 import { DEFAULTS, ITurbineConfig } from './models/turbineConfig';
-import { calculateBaseStyles, calculateModifierStyles, calculateBaseColorStyles, calculateModifierColorStyles } from './util';
+import { calculateBaseStyles, calculateModifierStyles, calculateBaseColorStyles, calculateModifierColorStyles, prependApply } from './util';
 
 function getColorValidator(config: ITurbineConfig) {
-    return config.colorValidator ? config.colorValidator : (_color: string, _values: any) => true;
+    return config.colorValidator ?? ((_color: string, _values: any) => true);
+}
+
+function parseStyles(config: ITurbineConfig): ITurbineConfig {
+    return {
+        ...config,
+        baseStyles: config.baseStyles && prependApply(config.baseStyles),
+        modifiers: config.modifiers && Object.entries(config.modifiers).reduce((res, [key, val]) => {
+            return {
+                ...res,
+                [key]: prependApply(val)
+            };
+        }, {})
+    };
 }
 
 /**
@@ -19,7 +32,7 @@ function getColorValidator(config: ITurbineConfig) {
 const turbine = plugin.withOptions<ITurbineConfig>((config: ITurbineConfig = DEFAULTS) => {
     return ({addComponents, theme}) => {
         const colorValidator = getColorValidator(config);
-
+        config = parseStyles(config);
         let all = {};
         if (config.baseStyles) {
             all = {
