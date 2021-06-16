@@ -1,4 +1,5 @@
 import { ITurbineConfig } from "../models/turbineConfig";
+import { prependApply } from "./prependApply";
 
 export const calculateModifierColorStyles = (config: ITurbineConfig, color: string) => {
     const {prefix, baseStyles, modifiers, colorStyles} = config;
@@ -9,7 +10,7 @@ export const calculateModifierColorStyles = (config: ITurbineConfig, color: stri
                 [`.${prefix}-${modifier}-${color}`]: {
                     ...(baseStyles ? { [baseStyles]: {} } : {}),
                     [styles]: {},
-                    [colorStyles(color)]: {}
+                    [prependApply(colorStyles(color))]: {}
                 }
             };
         }, {});
