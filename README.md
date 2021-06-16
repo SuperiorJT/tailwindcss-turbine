@@ -27,12 +27,12 @@ module.exports = {
     // Full example
     turbine({
       prefix: 'my-prefix',
-      baseStyles: '@apply px-4 py-2 ...',
+      baseStyles: 'px-4 py-2 ...',
       modifiers: {
-        sm: '@apply px-3 py-0.5 ...',
-        lg: '@apply px-5 py-3 ...',
+        sm: 'px-3 py-0.5 ...',
+        lg: 'px-5 py-3 ...',
       },
-      colorStyles: (color) => `@apply bg-${color}-500 text-white`,
+      colorStyles: (color) => `bg-${color}-500 text-white`,
       colorValidator: (color, values) => color !== 'gray' && values[500]
     })
   ]
