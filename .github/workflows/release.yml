@@ -6,19 +6,20 @@ on:
       - 'v*.*.*'
 
 jobs:
-  build:
+  npm-publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install
-        run: npm i
-      - name: Build
-        run: npm run build
-      - name: Pack
-        id: pack
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Publish
+        id: publish
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          filename=$(npm pack)
+          npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
+          filename=$(npm publish --ignore-scripts)
           echo "::set-output name=filename::`echo $filename`"
       - name: Release
         uses: softprops/action-gh-release@v1
@@ -27,4 +28,20 @@ jobs:
         with:
           files: |
             LICENSE
-            ${{ steps.pack.outputs.filename }}
+            ${{ steps.publish.outputs.filename }}
+  gpr-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    
