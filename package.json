@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-turbine",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Component generator for Tailwind CSS",
   "keywords": [
     "plugin",
