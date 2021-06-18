@@ -10,6 +10,9 @@
     "tailwindcss-component",
     "tailwindcss-components"
   ],
+  "repository": "git://github.com/SuperiorJT/tailwindcss-turbine.git",
+  "author": "Justin Miller <justin.miller.dev@protonmail.com>",
+  "license": "MIT",
   "files": [
     "dist/"
   ],
@@ -18,8 +21,6 @@
   "scripts": {
     "build": "tsc"
   },
-  "author": "Justin Miller <justin.miller.dev@protonmail.com>",
-  "license": "MIT",
   "devDependencies": {
     "@types/lodash.isplainobject": "^4.0.6",
     "postcss": "^8.3.4",
