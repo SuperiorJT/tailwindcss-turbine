@@ -1,28 +1,39 @@
 import plugin from 'tailwindcss/plugin';
-import { DEFAULTS, ITurbineConfig } from './models/turbineConfig';
-import { calculateBaseStyles, calculateModifierStyles, calculateBaseColorStyles, calculateModifierColorStyles, prependApply } from './util';
+import {DEFAULTS, ITurbineConfig} from './models/turbine-config';
+import {prependApply, applyBaseStyles, applyModifierStyles, applyBaseColorStyles, applyModifierColorStyles} from './util';
 
+/**
+ * Utility function used to default the colorValidator to return true.
+ *
+ * @param {ITurbineConfig} config
+ * @returns
+ */
 function getColorValidator(config: ITurbineConfig) {
-    return config.colorValidator ?? ((_color: string, _values: any) => true);
+	return config.colorValidator ?? ((_color: string, _values: any) => true);
 }
 
-function parseStyles(config: ITurbineConfig): ITurbineConfig {
-    return {
-        ...config,
-        baseStyles: config.baseStyles && prependApply(config.baseStyles),
-        modifiers: config.modifiers && Object.entries(config.modifiers).reduce((res, [key, val]) => {
-            return {
-                ...res,
-                [key]: prependApply(val)
-            };
-        }, {})
-    };
+/**
+ * Mutates the provided Turbine config to prepend `@apply` in styles that need it.
+ *
+ * @param {ITurbineConfig} config
+ */
+function parseStyles(config: ITurbineConfig) {
+	const {baseStyles, modifiers} = config;
+	if (modifiers) {
+		for (const key of Object.keys(modifiers)) {
+			modifiers[key] = prependApply(modifiers[key]);
+		}
+	}
+
+	if (baseStyles) {
+		config.baseStyles = prependApply(baseStyles);
+	}
 }
 
 /**
 * Tailwind CSS plugin which will generate class-based components using
 * a provided config object and your color theme.
-* 
+*
 * @defaultValue Not providing a configuration object will generate tail-kit-styled buttons
 *
 * @see [Docs](https://github.com/SuperiorJT/tailwindcss-turbine)
@@ -30,34 +41,26 @@ function parseStyles(config: ITurbineConfig): ITurbineConfig {
 * @param config The configuration object to generate components from.
 */
 const turbine = plugin.withOptions<ITurbineConfig>((config: ITurbineConfig = DEFAULTS) => {
-    return ({addComponents, theme}) => {
-        const colorValidator = getColorValidator(config);
-        config = parseStyles(config);
-        let all = {};
-        if (config.baseStyles) {
-            all = {
-                ...all,
-                ...calculateBaseStyles(config),
-                ...calculateModifierStyles(config)
-            }
-        }
+	return ({addComponents, theme}) => {
+		const colorValidator = getColorValidator(config);
+		parseStyles(config);
+		const styleMap = {};
+		if (config.baseStyles) {
+			applyBaseStyles(config, styleMap);
+			applyModifierStyles(config, styleMap);
+		}
 
-        const themed = Object.entries(theme('colors'))
-            .filter(([color, values]) => colorValidator(color, values))
-            .reduce((res, [color, _]) => {
-            return {
-                ...res,
-                ...calculateBaseColorStyles(config, color),
-                ...calculateModifierColorStyles(config, color)
-            };
-        }, {});
+		const colorMap = theme('colors');
+		if (colorMap && typeof colorMap !== 'string') {
+			for (const color of Object.keys(colorMap)) {
+				if (colorValidator(color, colorMap[color])) {
+					applyBaseColorStyles(config, color, styleMap);
+					applyModifierColorStyles(config, color, styleMap);
+				}
+			}
+		}
 
-        all = {
-            ...all,
-            ...themed
-        };
-
-        addComponents(all);
-    };
+		addComponents(styleMap);
+	};
 });
 export = turbine;
