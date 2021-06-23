@@ -17,14 +17,17 @@ jobs:
         run: |
           npm i
           npm run build
+      - name: Pack
+        id: pack
+        run: |
+          filename=$(npm pack)
+          echo "::set-output name=filename::`echo $filename`"
       - name: Publish
-        id: publish
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm config set //registry.npmjs.org/:_authToken ${NPM_TOKEN}
-          filename=$(npm publish --ignore-scripts)
-          echo "::set-output name=filename::`echo $filename`"
+          filename=$(npm publish ${{ steps.pack.outputs.filename }} --ignore-scripts)
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
@@ -32,4 +35,4 @@ jobs:
         with:
           files: |
             LICENSE
-            ${{ steps.publish.outputs.filename }}
+            ${{ steps.pack.outputs.filename }}
