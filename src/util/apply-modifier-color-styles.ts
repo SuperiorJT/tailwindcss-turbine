@@ -1,5 +1,5 @@
-import {ITurbineConfig} from '../models/turbine-config';
-import {prependApply} from './prepend-apply';
+import { ITurbineConfig } from '../models/turbine-config';
+import { prependApply } from './prepend-apply';
 
 /**
  * Mutates the provided target object, adding styles for eacb modifier in the Turbine config
@@ -10,9 +10,10 @@ import {prependApply} from './prepend-apply';
  * @param {*} [target={}]
  */
 export const applyModifierColorStyles = (config: ITurbineConfig, color: string, target: any = {}) => {
-	const {prefix, baseStyles, modifiers, colorStyles} = config;
+	const { prefix, baseStyles, modifiers, colorStyles } = config;
 	if (modifiers) {
 		for (const modifier of Object.keys(modifiers)) {
+			target[`.${prefix}-${modifier}-${color}`] = {};
 			if (baseStyles) {
 				target[`.${prefix}-${modifier}-${color}`][baseStyles] = {};
 			}

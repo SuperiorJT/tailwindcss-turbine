@@ -13,6 +13,9 @@
   "repository": "git://github.com/SuperiorJT/tailwindcss-turbine.git",
   "author": "Justin Miller <justin.miller.dev@protonmail.com>",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "files": [
     "dist/"
   ],
